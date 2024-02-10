@@ -2,7 +2,7 @@
   <div>
     <!-- type: image -->
     <FortuneWheel
-      style="width: 500px; max-width: 100%;"
+      style="width: 300px; max-width: 100%;"
       ref="wheelEl"
       type="image"
       :useWeight="true"
@@ -17,13 +17,62 @@
         <img src="../assets/roue.png" style="width: 100%;transform: rotateZ(60deg)" />
       </template>
       <template #button>
-        <img src="../assets/fleche.png" style="width: 230px; transform: translateY(-30px);"/>
+        <img src="../assets/fleche.png" style="width: 130px; transform: translateY(-20px);"/>
       </template>
     </FortuneWheel>
-
+      
     <p style="color: red;">* Remise valable sur les commandes qui dépassent 10DT, plafonnée à 8DT, et non cumulable avec d'autres promos.</p>
+    <button @click="wheelEl.startRotate()" class="styled-button"><h1>  لفْ العجلة 🎉</h1></button>   
   </div>
 </template>
+
+<style>
+.styled-button {
+  background-color: #5C14CD;
+  color: white;
+  padding: 10px 60px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.styled-button:hover {
+  background-color: #800080; /* Darker shade of purple on hover */
+}
+
+.styled-button:active {
+  background-color: #4b0082; /* Even darker shade of purple on button press */
+}
+
+/* SweetAlert styles */
+.swal2-popup {
+  background-color: #5C14CD !important;
+  color: white !important;
+}
+
+.swal2-title {
+  color: white !important;
+}
+
+.swal2-content {
+  color: white !important;
+}
+
+.swal2-icon {
+  color: white !important;
+}
+
+.swal2-confirm {
+  background-color: #5C14CD !important;
+  color: white !important;
+}
+
+.swal2-cancel {
+  background-color: #800080 !important; /* You can change this color if needed */
+  color: white !important;
+}
+</style>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
@@ -31,23 +80,22 @@ import FortuneWheel from 'vue-fortune-wheel'
 import 'vue-fortune-wheel/style.css'
 import sweetalert from 'sweetalert2'
 
-
 import imagePath from "../assets/button.png";
 const prizeId = ref(0)
 onMounted(() => {
   sweetalert.fire({
-  title: 'لفْ العجلة بإيدك، و انت و نصيبك و الحظ السعيد',
-  imageUrl: imagePath, // Replace with the correct path
-  confirmButtonText: 'OK',
-  imageWidth: 300,
-  imageHeight: 200
-}).then((result) => {
-  if (result.isConfirmed) {
-    wheelEl.value.startRotate();
-  }
+    title: 'لفْ العجلة بإيدك، و انت و نصيبك و الحظ السعيد',
+    imageUrl: imagePath, // Replace with the correct path
+    confirmButtonText: 'OK',
+    imageWidth: 300,
+    imageHeight: 200
+  }).then((result) => {
+    if (result.isConfirmed) {
+      console.log('Wheel is ready');
+    }
+  });
 });
 
-});
 const wheelEl = ref()
 const canvasVerify = ref(false)
 const verifyDuration = 5
@@ -95,7 +143,7 @@ const prizesImage = [
   },
 ]
 
-function testRequest (verified, duration) {
+function testRequest(verified, duration) {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(verified)
@@ -103,7 +151,7 @@ function testRequest (verified, duration) {
   })
 }
 
-function onCanvasRotateStart (rotate) {
+function onCanvasRotateStart(rotate) {
   if (canvasVerify.value) {
     const verified = true // true: the test passed the verification, false: the test failed the verification
     testRequest(verified, verifyDuration * 1000).then((verifiedRes) => {
@@ -120,22 +168,34 @@ function onCanvasRotateStart (rotate) {
   console.log('onCanvasRotateStart')
 }
 
-function onRotateEnd (prize) {
+function onRotateEnd(prize) {
   const today = new Date()
   const todayString = today.toISOString().split('T')[0]
   const week = coupon_codes.weeks.find(week => week.week === todayString)
   if (week) {
     const coupon = week.coupons.find(coupon => coupon.percentage === prize.value)
     if (coupon) {
-  sweetalert.fire({
-    title: 'ألف مبروك',
-    text:  'ألف مبروك إنت كسبت خصم' + prize.value + ' على طلبك القادم' + ' كود الخصم: ' + coupon.code + 'دَلَّع نفسك على يسير و بس',
-    icon: 'success',
-    confirmButtonText: 'OK'
-  });
-}
+      const couponCode = coupon.code;
 
-    else {
+      // Copy to clipboard
+      const el = document.createElement('textarea');
+      el.value = couponCode;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      sweetalert.fire({
+        title: 'ألف مبروك',
+        text: 'ألف مبروك إنت كسبت خصم ' + prize.value + ' على طلبك القادم' + ' كود الخصم: ' + couponCode + ' (تم نسخ الكود إلى الحافظة)',
+        icon: 'success',
+        confirmButtonText: 'Copy code to clipboard'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          copyToClipboard(couponCode)
+        }
+      })
+    } else {
       sweetalert.fire({
         title: 'اليوم ده مش يومك',
         icon: 'error',
@@ -143,8 +203,38 @@ function onRotateEnd (prize) {
       })
     }
   }
-  
 }
+
+function copyToClipboard(code) {
+  // Create a temporary textarea element
+  const el = document.createElement('textarea');
+
+  // Set the value of the textarea to the provided code
+  el.value = code;
+
+  // Append the textarea element to the document
+  document.body.appendChild(el);
+
+  // Select the text in the textarea
+  el.select();
+
+  // Copy the selected text to the clipboard
+  document.execCommand('copy');
+
+  // Remove the temporary textarea element
+  document.body.removeChild(el);
+
+  // Display a success message
+  sweetalert.fire({
+    title: 'تم نسخ الكود',
+    text: 'تم نسخ الكود إلى الحافظة بنجاح',
+    icon: 'success',
+    confirmButtonText: 'OK'
+  });
+}
+
+
+
 const coupon_codes = {
   "weeks": [
     {
@@ -197,4 +287,5 @@ const coupon_codes = {
     }
   ]
 }
+
 </script>
