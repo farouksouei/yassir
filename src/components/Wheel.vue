@@ -103,7 +103,7 @@ const prizesImage = [
   {
     id: 1,
     value: '0%',
-    weight: 50
+    weight: 0
   },
   {
     id: 2,
@@ -186,7 +186,7 @@ function onRotateEnd(prize) {
 
       sweetalert.fire({
         title: 'ألف مبروك',
-        text: 'ألف مبروك إنت كسبت خصم ' + prize.value + ' على طلبك القادم' + ' كود الخصم: ' + couponCode + ' (تم نسخ الكود إلى الحافظة)',
+        text: `ألف مبروك، إنت  كِسبت خصم ${prize.value} على طلبك القادم. الكود ${couponCode} و دَلَّع نفسك على يسير و بس`,
         icon: 'success',
         confirmButtonText: 'Copy code to clipboard'
       }).then((result) => {
