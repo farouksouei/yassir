@@ -80,12 +80,10 @@ import FortuneWheel from 'vue-fortune-wheel'
 import 'vue-fortune-wheel/style.css'
 import sweetalert from 'sweetalert2'
 
-import imagePath from "../assets/button.png";
 const prizeId = ref(0)
 onMounted(() => {
   sweetalert.fire({
     title: 'لفْ العجلة بإيدك، و انت و نصيبك و الحظ السعيد',
-    imageUrl: imagePath, // Replace with the correct path
     confirmButtonText: 'OK',
     imageWidth: 300,
     imageHeight: 200
