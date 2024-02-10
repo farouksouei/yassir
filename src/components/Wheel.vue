@@ -14,7 +14,7 @@
       @rotateEnd="onRotateEnd"
     >
       <template #wheel>
-        <img src="../assets/roue.png" style="width: 100%;transform: rotateZ(60deg)" />
+        <img src="../assets/Roue.png" style="width: 100%;transform: rotateZ(60deg)" />
       </template>
       <template #button>
         <img src="../assets/fleche.png" style="width: 130px; transform: translateY(-20px);"/>
@@ -74,11 +74,12 @@
 }
 </style>
 
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted } from 'vue'
 import FortuneWheel from 'vue-fortune-wheel'
 import 'vue-fortune-wheel/style.css'
 import sweetalert from 'sweetalert2'
+
 
 const prizeId = ref(0)
 onMounted(() => {
