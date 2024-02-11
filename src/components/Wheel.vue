@@ -103,7 +103,7 @@ const prizesImage = [
   {
     id: 1,
     value: '0%',
-    weight: 0
+    weight: 50
   },
   {
     id: 2,
@@ -192,11 +192,11 @@ function onRotateEnd(prize) {
       document.body.removeChild(el);
 
       sweetalert.fire({
-        title: 'ألف مبروك',
-        text: `ألف مبروك، إنت  كِسبت خصم ${prize.value} % ، فعِّل البرومو كود ${couponCode} و دَلَّع نفسك على يسير و بس`,
-        icon: 'success',
-        confirmButtonText: 'Copy code to clipboard'
-      }).then((result) => {
+  title: 'ألف مبروك',
+  html: `ألف مبروك، إنت  كِسبت خصم<h3>${prize.value}</h3><br> فعِّل البرومو كود <h3>${couponCode}</h3><br> و دَلَّع نفسك على يسير و بس`,
+  icon: 'success',
+  confirmButtonText: 'Copy code to clipboard'
+}).then((result) => {
         if (result.isConfirmed) {
           copyToClipboard(couponCode)
         }
