@@ -170,9 +170,16 @@ function onCanvasRotateStart(rotate) {
 function onRotateEnd(prize) {
   const today = new Date()
   const todayString = today.toISOString().split('T')[0]
-  const week = coupon_codes.weeks.find(week => week.week === todayString)
-  if (week) {
-    const coupon = week.coupons.find(coupon => coupon.percentage === prize.value)
+  // the date should be inside two weeks
+  // meaning todayString should be between the first and the last week
+
+  const currentWeek = coupon_codes.weeks.find(week => {
+  const weekStart = new Date(week['week-start']);
+  const weekEnd = new Date(week['week-end']);
+  return today >= weekStart && today <= weekEnd;
+});
+  if (currentWeek) {
+    const coupon = currentWeek.coupons.find(coupon => coupon.percentage === prize.value)
     if (coupon) {
       const couponCode = coupon.code;
 
@@ -186,7 +193,7 @@ function onRotateEnd(prize) {
 
       sweetalert.fire({
         title: 'ألف مبروك',
-        text: `ألف مبروك، إنت  كِسبت خصم ${prize.value} على طلبك القادم. الكود ${couponCode} و دَلَّع نفسك على يسير و بس`,
+        text: `ألف مبروك، إنت  كِسبت خصم ${prize.value} % ، فعِّل البرومو كود ${couponCode} و دَلَّع نفسك على يسير و بس`,
         icon: 'success',
         confirmButtonText: 'Copy code to clipboard'
       }).then((result) => {
@@ -237,7 +244,8 @@ function copyToClipboard(code) {
 const coupon_codes = {
   "weeks": [
     {
-      "week": "2024-02-10",
+      "week-start": "2024-02-10",
+      "week-end": "2024-02-17",
       "coupons": [
         {"code": "FG3CC3", "percentage": "10%", "probability": "22%"},
         {"code": "GANRXA", "percentage": "15%", "probability": "10%"},
@@ -249,7 +257,8 @@ const coupon_codes = {
       ]
     },
     {
-      "week": "2024-02-19",
+      "week-start": "2024-02-19",
+      "week-end": "2024-02-26",
       "coupons": [
         {"code": "0UWUX6", "percentage": "10%", "probability": "22%"},
         {"code": "G0AHGR", "percentage": "15%", "probability": "10%"},
@@ -261,7 +270,8 @@ const coupon_codes = {
       ]
     },
     {
-      "week": "2023-02-26",
+      "week-start": "2023-02-26",
+      "week-end": "2023-03-05",
       "coupons": [
         {"code": "KN6430", "percentage": "10%", "probability": "22%"},
         {"code": "9S6611", "percentage": "15%", "probability": "10%"},
@@ -273,7 +283,8 @@ const coupon_codes = {
       ]
     },
     {
-      "week": "2024-03-04",
+      "week-start": "2024-03-04",
+      "week-end": "2024-03-11",
       "coupons": [
         {"code": "9W3GDC", "percentage": "10%", "probability": "22%"},
         {"code": "FTQO89", "percentage": "15%", "probability": "10%"},
