@@ -205,7 +205,7 @@ function onRotateEnd(prize) {
       sweetalert.fire({
         title: 'اليوم ده مش يومك',
         icon: 'error',
-        confirmButtonText: 'OK'
+        showConfirmButton: false,
       })
     }
   }
@@ -235,7 +235,7 @@ function copyToClipboard(code) {
     title: 'تم نسخ الكود',
     text: 'تم نسخ الكود إلى الحافظة بنجاح',
     icon: 'success',
-    confirmButtonText: 'OK'
+    showConfirmButton: false,
   });
 }
 
