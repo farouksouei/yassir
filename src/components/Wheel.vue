@@ -173,11 +173,18 @@ function onRotateEnd(prize) {
   // the date should be inside two weeks
   // meaning todayString should be between the first and the last week
 
-  const currentWeek = coupon_codes.weeks.find(week => {
-  const weekStart = new Date(week['week-start']);
-  const weekEnd = new Date(week['week-end']);
-  return today >= weekStart && today <= weekEnd;
-});
+  const currentWeek = {"coupons": [
+        {"code": "9W3GDC", "percentage": "10%", "probability": "22%"},
+        {"code": "FTQO89", "percentage": "15%", "probability": "10%"},
+        {"code": "LZ3OPY", "percentage": "20%", "probability": "7%"},
+        {"code": "FQJBS0", "percentage": "25%", "probability": "5%"},
+        {"code": "503SBJ", "percentage": "30%", "probability": "3%"},
+        {"code": "7KD4FS", "percentage": "40%", "probability": "2%"},
+        {"code": "CF9KTO", "percentage": "50%", "probability": "1%"}
+      ]
+    }
+
+  console.log('currentWeek', currentWeek);
   if (currentWeek) {
     const coupon = currentWeek.coupons.find(coupon => coupon.percentage === prize.value)
     if (coupon) {
@@ -258,7 +265,7 @@ const coupon_codes = {
     },
     {
       "week-start": "2024-02-19",
-      "week-end": "2024-02-26",
+      "week-end": "2024-02-25",
       "coupons": [
         {"code": "0UWUX6", "percentage": "10%", "probability": "22%"},
         {"code": "G0AHGR", "percentage": "15%", "probability": "10%"},
@@ -271,7 +278,7 @@ const coupon_codes = {
     },
     {
       "week-start": "2023-02-26",
-      "week-end": "2023-03-05",
+      "week-end": "2023-03-04",
       "coupons": [
         {"code": "KN6430", "percentage": "10%", "probability": "22%"},
         {"code": "9S6611", "percentage": "15%", "probability": "10%"},
@@ -283,7 +290,7 @@ const coupon_codes = {
       ]
     },
     {
-      "week-start": "2024-03-04",
+      "week-start": "2024-03-05",
       "week-end": "2024-03-11",
       "coupons": [
         {"code": "9W3GDC", "percentage": "10%", "probability": "22%"},
