@@ -174,13 +174,13 @@ function onRotateEnd(prize) {
   // meaning todayString should be between the first and the last week
 
   const currentWeek = {"coupons": [
-        {"code": "KN6430", "percentage": "10%", "probability": "22%"},
-        {"code": "9S6611", "percentage": "15%", "probability": "10%"},
-        {"code": "8M95JI", "percentage": "20%", "probability": "7%"},
-        {"code": "Y6ZM65", "percentage": "25%", "probability": "5%"},
-        {"code": "4N8J23", "percentage": "30%", "probability": "3%"},
-        {"code": "FG0E4V", "percentage": "40%", "probability": "2%"},
-        {"code": "P7N249", "percentage": "50%", "probability": "1%"}
+        {"code": "9W3GDC", "percentage": "10%", "probability": "22%"},
+        {"code": "FTQO89", "percentage": "15%", "probability": "10%"},
+        {"code": "LZ3OPY", "percentage": "20%", "probability": "7%"},
+        {"code": "FQJBS0", "percentage": "25%", "probability": "5%"},
+        {"code": "503SBJ", "percentage": "30%", "probability": "3%"},
+        {"code": "7KD4FS", "percentage": "40%", "probability": "2%"},
+        {"code": "CF9KTO", "percentage": "50%", "probability": "1%"}
       ]
     }
 
